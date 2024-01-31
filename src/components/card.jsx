@@ -12,7 +12,7 @@ const Card = ({ startingLocation, destinationLocation, timeTakenInMin, potHoles,
                     <span className="font-bold text-gray-300">Time Taken:</span> {timeTakenInMin + " mins"}
                 </p>
                 <p>
-                    <span className="font-bold text-gray-300">Number of Portholes: </span> {potHoles}
+                    <span className="font-bold text-gray-300">Number of Potholes: </span> {potHoles}
                 </p>
                 <p>
                     <span className="font-bold text-gray-300">Number of Animals: </span> {animal}

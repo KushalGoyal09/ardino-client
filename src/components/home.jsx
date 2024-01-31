@@ -118,7 +118,7 @@ const Home = () => {
                     {index === 0 && (
                       <div>
                         <img
-                          src="/src/assets/map.png"
+                          src="src/assets/map.png"
                           alt="Google map"
                           className="rounded-md shadow-md mt-5 mb-5 mx-auto"
                         />
@@ -150,7 +150,7 @@ const Home = () => {
                     <th className="border border-gray-400 px-4 py-2">Starting Location</th>
                     <th className="border border-gray-400 px-4 py-2">Destination Location</th>
                     <th className="border border-gray-400 px-4 py-2">Time Taken</th>
-                    <th className="border border-gray-400 px-4 py-2">Number of Portholes</th>
+                    <th className="border border-gray-400 px-4 py-2">Number of Potholes</th>
                     <th className="border border-gray-400 px-4 py-2">Number of Animals</th>
                   </tr>
                 </thead>
