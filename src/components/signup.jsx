@@ -1,16 +1,28 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function Signup() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add signup logic here (e.g., API call, validation, etc.)
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Password:', password);
+    try {
+      const { data } = await axios.post(`https://ardino-server-production.up.railway.app/signup`, { name, email, password });
+      if (!data.success) {
+        setErrorMessage(data.message);
+      } else {
+        setErrorMessage('');
+        const token = data.token;
+        localStorage.setItem('token', token);
+        window.location.href = '/';
+      }
+    } catch (error) {
+      console.error('Error during signup:', error);
+      setErrorMessage('An error occurred during signup. Please try again later.');
+    }
   };
 
   return (
@@ -57,6 +69,11 @@ function Signup() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          {errorMessage && (
+            <div className="text-red-600 text-sm mb-4">
+              {errorMessage}
+            </div>
+          )}
           <button
             type="submit"
             className="w-full bg-green-500 text-white p-2 rounded-md hover:bg-green-600"
@@ -64,6 +81,9 @@ function Signup() {
             Sign Up
           </button>
         </form>
+        <p className="text-sm text-gray-600 mt-4">
+          Already have an account? <a href="/login" className="text-blue-500 hover:underline">Log in here</a>.
+        </p>
       </div>
     </div>
   );

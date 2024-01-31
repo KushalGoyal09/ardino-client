@@ -1,14 +1,27 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add authentication logic here (e.g., API call, validation, etc.)
-    console.log('Email:', email);
-    console.log('Password:', password);
+    try {
+      const { data } = await axios.post(`https://ardino-server-production.up.railway.app/login`, { email, password });
+      if (!data.success) {
+        setErrorMessage(data.message);
+      } else {
+        setErrorMessage('');
+        const token = data.token;
+        localStorage.setItem('token', token);
+        window.location.href = '/';
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      setErrorMessage('An error occurred during login. Please try again later.');
+    }
   };
 
   return (
@@ -42,13 +55,21 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          {errorMessage && (
+            <div className="text-red-600 text-sm mb-4">
+              {errorMessage}
+            </div>
+          )}
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+            className="w-full bg-green-500 text-white p-2 rounded-md hover:bg-green-600"
           >
             Login
           </button>
         </form>
+        <p className="text-sm text-gray-600 mt-4">
+          Does not have an account already? <a href="/signup" className="text-blue-500 hover:underline">Register here</a>.
+        </p>
       </div>
     </div>
   );

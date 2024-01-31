@@ -10,8 +10,12 @@ module.exports = {
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   settings: { react: { version: '18.2' } },
-  plugins: ['react-refresh'],
-  rules: {
+  plugins: ['react-refresh', 
+  new webpack.DefinePlugin({
+    'process.env.SERVER_URL': JSON.stringify(process.env.SERVER_URL),
+  })
+],
+  rules: {    
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
