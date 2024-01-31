@@ -51,13 +51,13 @@ const Home = () => {
   const fetchAllRidesOfType = async (rideID) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(`https://ardino-server-production.up.railway.app/allRides`, 
-      {rideID: rideID},
-      {
-        headers: {
-          authorization: `${token}`,
-        },
-      });
+      const response = await axios.post(`https://ardino-server-production.up.railway.app/allRides`,
+        { rideID: rideID },
+        {
+          headers: {
+            authorization: `${token}`,
+          },
+        });
       setAllRidesOfType(response.data.rides);
     } catch (error) {
       console.error('Error fetching rides of the same type:', error);
@@ -75,7 +75,13 @@ const Home = () => {
       {user ? (
         <header className="text-black py-8 text-center mb-5">
           <h1 className="text-4xl font-bold">Hi {user.name}</h1>
-          <p className="text-lg mt-4">Welcome to our platform </p>
+          <p className="text-lg mt-4">DRIVE SAFE  ARRIVE ALIVE </p>
+          <button 
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5"
+          onClick={() => window.location.href = '/new'}
+          >
+            Add a Ride
+          </button>
         </header>
       ) : (
         <div>
@@ -97,17 +103,83 @@ const Home = () => {
       <div>
         {user && userRides.length > 0 ? (
           <div>
-            {userRides.map((ride) => (
-              <Card
-                key={ride._id}
-                startingLocation={ride.startingLocation}
-                destinationLocation={ride.destinationLocation}
-                timeTakenInMin={ride.timeTakenInMin}
-                potHoles={ride.potHoles}
-                animal={ride.animal}
-                onClick={() => handleCardClick(ride._id)} 
-              />
-            ))}
+            {selectedRideType ? (
+              <div>
+                {allRidesOfType.map((ride, index) => (
+                  <React.Fragment key={ride._id}>
+                    <Card
+                      startingLocation={ride.startingLocation}
+                      destinationLocation={ride.destinationLocation}
+                      timeTakenInMin={ride.timeTakenInMin}
+                      potHoles={ride.potHoles}
+                      animal={ride.animal}
+                      onClick={() => handleCardClick(ride._id)}
+                    />
+                    {index === 0 && (
+                      <div>
+                        <img
+                          src="/src/assets/map.png"
+                          alt="Google map"
+                          className="rounded-md shadow-md mt-5 mb-5 mx-auto"
+                        />
+                        <p className="text-lg font-bold mt-4">Other rides of similar destination</p>
+                      </div>
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+            ) : (
+              <div>
+                {userRides.map((ride) => (
+                  <Card
+                    key={ride._id}
+                    startingLocation={ride.startingLocation}
+                    destinationLocation={ride.destinationLocation}
+                    timeTakenInMin={ride.timeTakenInMin}
+                    potHoles={ride.potHoles}
+                    animal={ride.animal}
+                    onClick={() => handleCardClick(ride._id)}
+                  />
+                ))}
+              </div>
+            )}
+            {selectedRideType && (
+              <table className="mt-4 border-collapse border border-gray-400">
+                <thead>
+                  <tr>
+                    <th className="border border-gray-400 px-4 py-2">Starting Location</th>
+                    <th className="border border-gray-400 px-4 py-2">Destination Location</th>
+                    <th className="border border-gray-400 px-4 py-2">Time Taken</th>
+                    <th className="border border-gray-400 px-4 py-2">Number of Portholes</th>
+                    <th className="border border-gray-400 px-4 py-2">Number of Animals</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {selectedRideType ? (
+                    allRidesOfType.map((ride) => (
+                      <tr key={ride._id}>
+                        <td className="border border-gray-400 px-4 py-2">{ride.startingLocation}</td>
+                        <td className="border border-gray-400 px-4 py-2">{ride.destinationLocation}</td>
+                        <td className="border border-gray-400 px-4 py-2">{ride.timeTakenInMin} mins</td>
+                        <td className="border border-gray-400 px-4 py-2">{ride.potHoles}</td>
+                        <td className="border border-gray-400 px-4 py-2">{ride.animal}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    userRides.map((ride) => (
+                      <tr key={ride._id}>
+                        <td className="border border-gray-400 px-4 py-2">{ride.startingLocation}</td>
+                        <td className="border border-gray-400 px-4 py-2">{ride.destinationLocation}</td>
+                        <td className="border border-gray-400 px-4 py-2">{ride.timeTakenInMin} mins</td>
+                        <td className="border border-gray-400 px-4 py-2">{ride.potHoles}</td>
+                        <td className="border border-gray-400 px-4 py-2">{ride.animal}</td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            )}
+
           </div>
         ) : (
           <div className="text-center">
@@ -118,6 +190,7 @@ const Home = () => {
           </div>
         )}
       </div>
+
     </div>
   );
 };

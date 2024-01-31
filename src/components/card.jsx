@@ -17,13 +17,18 @@ const Card = ({ startingLocation, destinationLocation, timeTakenInMin, potHoles,
                 <p>
                     <span className="font-bold text-gray-300">Number of Animals: </span> {animal}
                 </p>
+                <p>
+                    <span className="font-bold text-gray-300">Rating: </span> {(Math.floor(Math.random()*5) + 5) + '/10'}
+                </p>
             </div>
-            <button
-                onClick={onClick}
-                className="mt-4 bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-pink"
-            >
-                View Details
-            </button>
+            {onClick && (
+                <button
+                    onClick={onClick}
+                    className="mt-4 bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-pink"
+                >
+                    View Details
+                </button>
+            )}
         </div>
     );
 };
