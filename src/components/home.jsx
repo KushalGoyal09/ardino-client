@@ -118,7 +118,7 @@ const Home = () => {
                     {index === 0 && (
                       <div>
                         <img
-                          src="src/assets/map.png"
+                          src="https://i.stack.imgur.com/HILmr.png"
                           alt="Google map"
                           className="rounded-md shadow-md mt-5 mb-5 mx-auto"
                         />
