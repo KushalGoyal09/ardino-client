@@ -15,7 +15,7 @@ const Home = () => {
         window.location.href = '/login'
       } else {
         try {
-          const { data } = await axios.get('https://ardino-server-production.up.railway.app/home', {
+          const { data } = await axios.get('https://ardino-server-production-2582.up.railway.app/home', {
             headers: {
               authorization: `${token}`,
             },
@@ -34,7 +34,7 @@ const Home = () => {
           window.location.href = '/login';
         }
         try {
-          const { data } = await axios.get('https://ardino-server-production.up.railway.app/userRides', {
+          const { data } = await axios.get('https://ardino-server-production-2582.up.railway.app/userRides', {
             headers: {
               authorization: `${token}`,
             },
@@ -51,7 +51,7 @@ const Home = () => {
   const fetchAllRidesOfType = async (rideID) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(`https://ardino-server-production.up.railway.app/allRides`,
+      const response = await axios.post(`https://ardino-server-production-2582.up.railway.app/allRides`,
         { rideID: rideID },
         {
           headers: {

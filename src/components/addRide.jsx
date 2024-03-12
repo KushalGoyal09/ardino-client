@@ -22,7 +22,7 @@ function AddRide() {
         e.preventDefault();
 
         try {
-            const response = await axios.post("https://ardino-server-production.up.railway.app/admin/create", formData, {
+            const response = await axios.post("https://ardino-server-production-2582.up.railway.app/admin/create", formData, {
                 headers: {
                     authorization: `${token}`,
                 },
